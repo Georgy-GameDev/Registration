@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="app">
-        <!-- Загрузка -->
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner"></div>
             <p>Загрузка данных...</p>
@@ -19,7 +18,6 @@
             <div class="login-container">
                 <h1 class="login-title">Электронная регистрация</h1>
                 <div class="spots-info" id="spotsInfo"></div>
-
                 <div class="login-cards" id="loginCards">
                     <div class="login-card" id="goRegister">
                         <div class="login-card-icon">📝</div>
@@ -32,55 +30,27 @@
                         <p>Уже зарегистрированы? Войдите</p>
                     </div>
                 </div>
-
-                <!-- Форма регистрации -->
                 <div class="login-form hidden" id="registerFormBlock">
                     <h2>Регистрация на мероприятие</h2>
                     <p class="hint" id="spotsHint"></p>
                     <form id="selfRegisterForm">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="selfLastName">Фамилия</label>
-                                <input type="text" id="selfLastName" required placeholder="Иванов">
-                            </div>
-                            <div class="form-group">
-                                <label for="selfFirstName">Имя</label>
-                                <input type="text" id="selfFirstName" required placeholder="Иван">
-                            </div>
+                            <div class="form-group"><label for="selfLastName">Фамилия</label><input type="text" id="selfLastName" required placeholder="Иванов"></div>
+                            <div class="form-group"><label for="selfFirstName">Имя</label><input type="text" id="selfFirstName" required placeholder="Иван"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="selfMiddleName">Отчество</label>
-                            <input type="text" id="selfMiddleName" placeholder="Иванович (необязательно)">
-                        </div>
-                        <div class="form-group">
-                            <label for="selfEmail">Электронная почта</label>
-                            <input type="email" id="selfEmail" required placeholder="example@mail.ru">
-                        </div>
-                        <div class="form-group">
-                            <label for="selfPhone">Телефон</label>
-                            <input type="tel" id="selfPhone" required placeholder="+7 (999) 123-45-67">
-                        </div>
-                        <div class="form-group">
-                            <label for="selfPassword">Придумайте пароль</label>
-                            <input type="password" id="selfPassword" required placeholder="Минимум 4 символа" minlength="4">
-                        </div>
+                        <div class="form-group"><label for="selfMiddleName">Отчество</label><input type="text" id="selfMiddleName" placeholder="Иванович (необязательно)"></div>
+                        <div class="form-group"><label for="selfEmail">Электронная почта</label><input type="email" id="selfEmail" required placeholder="example@mail.ru"></div>
+                        <div class="form-group"><label for="selfPhone">Телефон</label><input type="tel" id="selfPhone" required placeholder="+7 (999) 123-45-67"></div>
+                        <div class="form-group"><label for="selfPassword">Придумайте пароль</label><input type="password" id="selfPassword" required placeholder="Минимум 6 символов" minlength="6"></div>
                         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                     </form>
                     <button class="btn-link" id="backFromRegister">← Назад</button>
                 </div>
-
-                <!-- Форма входа -->
                 <div class="login-form hidden" id="loginFormBlock">
                     <h2>Вход в личный кабинет</h2>
                     <form id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Электронная почта</label>
-                            <input type="email" id="loginEmail" required placeholder="example@mail.ru">
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Пароль</label>
-                            <input type="password" id="loginPassword" required placeholder="Введите пароль">
-                        </div>
+                        <div class="form-group"><label for="loginEmail">Электронная почта</label><input type="email" id="loginEmail" required placeholder="example@mail.ru"></div>
+                        <div class="form-group"><label for="loginPassword">Пароль</label><input type="password" id="loginPassword" required placeholder="Введите пароль"></div>
                         <button type="submit" class="btn btn-primary">Войти</button>
                     </form>
                     <button class="btn-link" id="backFromLogin">← Назад</button>
@@ -105,6 +75,7 @@
                     <div class="info-item"><span class="info-label">Телефон</span><span class="info-value" id="uPhone"></span></div>
                     <div class="info-item"><span class="info-label">Дата регистрации</span><span class="info-value" id="uDate"></span></div>
                 </div>
+                <div class="qr-block" id="qrBlock"></div>
                 <button class="btn btn-danger" id="userCancelBtn">Отменить мою запись</button>
             </div>
         </section>
@@ -144,11 +115,14 @@
                 <div class="form-card">
                     <div class="list-header">
                         <h2>Все записи</h2>
-                        <select id="statusFilter" class="select-filter">
-                            <option value="all">Все статусы</option>
-                            <option value="active">Активные</option>
-                            <option value="cancelled">Отменённые</option>
-                        </select>
+                        <div class="list-actions">
+                            <button class="btn btn-sm btn-export" id="exportExcel">Скачать Excel</button>
+                            <select id="statusFilter" class="select-filter">
+                                <option value="all">Все статусы</option>
+                                <option value="active">Активные</option>
+                                <option value="cancelled">Отменённые</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="search-bar"><input type="text" id="searchInput" placeholder="Поиск по имени, email или номеру..."></div>
                     <div class="table-wrapper">
@@ -162,7 +136,6 @@
             </div>
         </section>
 
-        <!-- Модальное окно -->
         <div class="modal-overlay hidden" id="modalOverlay">
             <div class="modal">
                 <div class="modal-icon" id="modalIcon"></div>
@@ -177,20 +150,21 @@
         <div class="toast hidden" id="toast"><span id="toastMessage"></span></div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
 // =====================================================================
-//  НАСТРОЙКИ — ЗАМЕНИТЕ НА СВОИ
+//  НАСТРОЙКИ
 // =====================================================================
 var ADMIN_EMAIL = 'tonytugboat79@gmail.com';
-var ADMIN_PASSWORD = '12345';
 var MAX_CAPACITY = 500;
 
-//  Вставьте сюда конфигурацию из Firebase Console
-//  (Project Settings -> General -> Your apps -> SDK setup)
 var firebaseConfig = {
     apiKey: "AIzaSyDP1BNJ_Ki1gcg3ewPPvfqprGK12i5fdg",
     authDomain: "registration-c9a62.firebaseapp.com",
@@ -200,44 +174,48 @@ var firebaseConfig = {
     messagingSenderId: "970831688648",
     appId: "1:970831688648:web:954b63169bd835c4acba65"
 };
+
+// EmailJS — замените на свои данные после регистрации на emailjs.com
+// Если оставить пустыми, письма просто не будут отправляться
+var EMAILJS_PUBLIC_KEY = '';
+var EMAILJS_SERVICE_ID = '';
+var EMAILJS_TEMPLATE_REGISTER = '';
+var EMAILJS_TEMPLATE_CANCEL = '';
 // =====================================================================
 
 var registrations = [];
 var dataReady = false;
 var currentUser = null;
+var currentUserRegId = null;
 var db = null;
+var auth = null;
 
 // ========== Firebase Init ==========
 
-if (firebaseConfig.apiKey === "ВСТАВЬТЕ_СЮДА") {
-    document.getElementById('loadingOverlay').innerHTML =
-        '<div style="text-align:center;padding:20px;">' +
-        '<h2 style="color:#ef4444;margin-bottom:12px;">Firebase не настроен</h2>' +
-        '<p style="color:#64748b;">Откройте index.html и замените firebaseConfig на свои данные из Firebase Console.</p></div>';
-} else {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
+firebase.initializeApp(firebaseConfig);
+db = firebase.database();
+auth = firebase.auth();
 
-    db.ref('registrations').on('value', function(snapshot) {
-        registrations = [];
-        snapshot.forEach(function(child) {
-            registrations.push(child.val());
-        });
-        dataReady = true;
-        document.getElementById('loadingOverlay').classList.add('hidden');
-        refreshUI();
-    });
+if (EMAILJS_PUBLIC_KEY) {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
 }
+
+db.ref('registrations').on('value', function(snapshot) {
+    registrations = [];
+    snapshot.forEach(function(child) { registrations.push(child.val()); });
+    dataReady = true;
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    refreshUI();
+});
 
 function refreshUI() {
     updateSpots();
     if (document.getElementById('adminScreen').classList.contains('active')) {
-        updateAdminStats();
-        renderAdminTable();
+        updateAdminStats(); renderAdminTable();
     }
-    if (currentUser && document.getElementById('userScreen').classList.contains('active')) {
+    if (currentUserRegId && document.getElementById('userScreen').classList.contains('active')) {
         for (var i = 0; i < registrations.length; i++) {
-            if (registrations[i].regId === currentUser.regId) {
+            if (registrations[i].regId === currentUserRegId) {
                 currentUser = registrations[i];
                 renderUserCard(currentUser);
                 break;
@@ -249,43 +227,43 @@ function refreshUI() {
 // ========== Firebase CRUD ==========
 
 function addRegistration(reg, callback) {
-    db.ref('counter').transaction(function(current) {
-        return (current || 0) + 1;
-    }, function(error, committed, snapshot) {
-        if (error || !committed) {
-            showToast('Ошибка при регистрации', 'error');
-            if (callback) callback(null);
-            return;
-        }
-        var num = snapshot.val();
-        var s = String(num);
-        while (s.length < 3) s = '0' + s;
+    db.ref('counter').transaction(function(c) { return (c || 0) + 1; },
+    function(error, committed, snapshot) {
+        if (error || !committed) { showToast('Ошибка при регистрации', 'error'); if (callback) callback(null); return; }
+        var s = String(snapshot.val()); while (s.length < 3) s = '0' + s;
         reg.regId = 'REG-' + s;
         db.ref('registrations/' + reg.regId).set(reg, function(err) {
-            if (err) {
-                showToast('Ошибка сохранения', 'error');
-                if (callback) callback(null);
-            } else {
-                if (callback) callback(reg);
-            }
+            if (err) { showToast('Ошибка сохранения', 'error'); if (callback) callback(null); }
+            else { if (callback) callback(reg); }
         });
     });
 }
 
-function updateRegistration(regId, updates) {
-    db.ref('registrations/' + regId).update(updates);
-}
-
-function deleteRegistration(regId) {
-    db.ref('registrations/' + regId).remove();
-}
+function updateRegistration(regId, updates) { db.ref('registrations/' + regId).update(updates); }
+function deleteRegistration(regId) { db.ref('registrations/' + regId).remove(); }
 
 function activeCount() {
     var c = 0;
-    for (var i = 0; i < registrations.length; i++) {
-        if (registrations[i].status === 'active') c++;
-    }
+    for (var i = 0; i < registrations.length; i++) { if (registrations[i].status === 'active') c++; }
     return c;
+}
+
+// ========== Email Notifications ==========
+
+function sendEmail(templateId, params) {
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !templateId) return;
+    try { emailjs.send(EMAILJS_SERVICE_ID, templateId, params); } catch(e) {}
+}
+
+// ========== QR Code ==========
+
+function showQR(regId) {
+    var block = document.getElementById('qrBlock');
+    block.innerHTML = '<p class="qr-label">QR-код вашей регистрации</p><div id="qrCanvas"></div>';
+    var url = window.location.origin + window.location.pathname + '?reg=' + regId;
+    new QRCode(document.getElementById('qrCanvas'), {
+        text: url, width: 160, height: 160, colorDark: '#1e293b', colorLight: '#ffffff'
+    });
 }
 
 // ========== Helpers ==========
@@ -357,22 +335,14 @@ var loginCards = document.getElementById('loginCards');
 var registerBlock = document.getElementById('registerFormBlock');
 var loginBlock = document.getElementById('loginFormBlock');
 
-function showCards() {
-    loginCards.classList.remove('hidden');
-    registerBlock.classList.add('hidden');
-    loginBlock.classList.add('hidden');
-}
+function showCards() { loginCards.classList.remove('hidden'); registerBlock.classList.add('hidden'); loginBlock.classList.add('hidden'); }
 
-document.getElementById('goRegister').addEventListener('click', function() {
-    loginCards.classList.add('hidden'); updateSpots(); registerBlock.classList.remove('hidden');
-});
-document.getElementById('goLogin').addEventListener('click', function() {
-    loginCards.classList.add('hidden'); loginBlock.classList.remove('hidden');
-});
+document.getElementById('goRegister').addEventListener('click', function() { loginCards.classList.add('hidden'); updateSpots(); registerBlock.classList.remove('hidden'); });
+document.getElementById('goLogin').addEventListener('click', function() { loginCards.classList.add('hidden'); loginBlock.classList.remove('hidden'); });
 document.getElementById('backFromRegister').addEventListener('click', showCards);
 document.getElementById('backFromLogin').addEventListener('click', showCards);
 
-// ========== Self Registration ==========
+// ========== Self Registration (Firebase Auth) ==========
 
 setupPhoneInput(document.getElementById('selfPhone'));
 
@@ -391,36 +361,46 @@ document.getElementById('selfRegisterForm').addEventListener('submit', function(
         }
     }
 
-    var reg = {
+    var form = e.target;
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Регистрация...';
+
+    var regData = {
         lastName: document.getElementById('selfLastName').value.trim(),
         firstName: document.getElementById('selfFirstName').value.trim(),
         middleName: document.getElementById('selfMiddleName').value.trim(),
         email: email,
         phone: document.getElementById('selfPhone').value.trim(),
-        password: password,
         date: new Date().toISOString(),
         status: 'active'
     };
 
-    var form = e.target;
-    var btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.textContent = 'Регистрация...';
-
-    addRegistration(reg, function(result) {
-        btn.disabled = false;
-        btn.textContent = 'Зарегистрироваться';
-        if (result) {
-            showToast('Вы зарегистрированы! Номер: ' + result.regId);
-            currentUser = result;
-            renderUserCard(result);
-            showScreen('userScreen');
-            form.reset();
-        }
+    auth.createUserWithEmailAndPassword(email, password).then(function(cred) {
+        regData.uid = cred.user.uid;
+        addRegistration(regData, function(result) {
+            btn.disabled = false; btn.textContent = 'Зарегистрироваться';
+            if (result) {
+                sendEmail(EMAILJS_TEMPLATE_REGISTER, {
+                    to_email: result.email,
+                    to_name: result.lastName + ' ' + result.firstName,
+                    reg_id: result.regId
+                });
+                showToast('Вы зарегистрированы! Номер: ' + result.regId);
+                currentUser = result; currentUserRegId = result.regId;
+                renderUserCard(result); showQR(result.regId);
+                showScreen('userScreen');
+                form.reset();
+            }
+        });
+    }).catch(function(err) {
+        btn.disabled = false; btn.textContent = 'Зарегистрироваться';
+        if (err.code === 'auth/email-already-in-use') showToast('Этот email уже используется. Нажмите Войти.', 'error');
+        else if (err.code === 'auth/weak-password') showToast('Пароль слишком короткий (мин. 6 символов)', 'error');
+        else showToast('Ошибка: ' + err.message, 'error');
     });
 });
 
-// ========== Login ==========
+// ========== Login (Firebase Auth) ==========
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -428,22 +408,33 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
     var email = document.getElementById('loginEmail').value.trim().toLowerCase();
     var password = document.getElementById('loginPassword').value;
+    var form = e.target;
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Вход...';
 
-    if (email === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
-        openAdminPanel(); e.target.reset(); return;
-    }
+    auth.signInWithEmailAndPassword(email, password).then(function() {
+        btn.disabled = false; btn.textContent = 'Войти';
 
-    var found = null;
-    for (var i = 0; i < registrations.length; i++) {
-        if (registrations[i].email === email && registrations[i].password === password) {
-            found = registrations[i]; break;
+        if (email === ADMIN_EMAIL.toLowerCase()) {
+            openAdminPanel(); form.reset(); return;
         }
-    }
-    if (!found) { showToast('Неверный email или пароль', 'error'); return; }
-    currentUser = found;
-    renderUserCard(found);
-    showScreen('userScreen');
-    e.target.reset();
+
+        var found = null;
+        for (var i = 0; i < registrations.length; i++) {
+            if (registrations[i].email === email) { found = registrations[i]; break; }
+        }
+        if (!found) { showToast('Запись не найдена', 'error'); return; }
+
+        currentUser = found; currentUserRegId = found.regId;
+        renderUserCard(found); showQR(found.regId);
+        showScreen('userScreen');
+        form.reset();
+    }).catch(function(err) {
+        btn.disabled = false; btn.textContent = 'Войти';
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+            showToast('Неверный email или пароль', 'error');
+        } else showToast('Ошибка: ' + err.message, 'error');
+    });
 });
 
 // ========== User Panel ==========
@@ -466,12 +457,20 @@ document.getElementById('userCancelBtn').addEventListener('click', function() {
     if (!currentUser) return;
     showModal('⚠️', 'Отмена регистрации', 'Отменить запись ' + currentUser.regId + '?', 'Да, отменить', function() {
         updateRegistration(currentUser.regId, { status: 'cancelled', cancelledDate: new Date().toISOString() });
+        sendEmail(EMAILJS_TEMPLATE_CANCEL, {
+            to_email: currentUser.email,
+            to_name: currentUser.lastName + ' ' + currentUser.firstName,
+            reg_id: currentUser.regId
+        });
         showToast('Запись ' + currentUser.regId + ' отменена');
     });
 });
 
 document.getElementById('userLogout').addEventListener('click', function() {
-    currentUser = null; showCards(); showScreen('loginScreen'); updateSpots();
+    auth.signOut();
+    currentUser = null; currentUserRegId = null;
+    document.getElementById('qrBlock').innerHTML = '';
+    showCards(); showScreen('loginScreen'); updateSpots();
 });
 
 // ========== Admin Panel ==========
@@ -485,6 +484,7 @@ function updateAdminStats() {
 }
 
 document.getElementById('adminLogout').addEventListener('click', function() {
+    auth.signOut();
     showCards(); showScreen('loginScreen'); updateSpots();
 });
 
@@ -504,37 +504,39 @@ setupPhoneInput(document.getElementById('aPhone'));
 document.getElementById('adminRegisterForm').addEventListener('submit', function(e) {
     e.preventDefault();
     if (activeCount() >= MAX_CAPACITY) { showToast('Все 500 мест заняты!', 'error'); return; }
-
     var email = document.getElementById('aEmail').value.trim().toLowerCase();
     for (var i = 0; i < registrations.length; i++) {
-        if (registrations[i].email === email && registrations[i].status === 'active') {
-            showToast('Этот email уже зарегистрирован!', 'error'); return;
-        }
+        if (registrations[i].email === email && registrations[i].status === 'active') { showToast('Этот email уже зарегистрирован!', 'error'); return; }
     }
-
     var reg = {
         lastName: document.getElementById('aLastName').value.trim(),
         firstName: document.getElementById('aFirstName').value.trim(),
         middleName: document.getElementById('aMiddleName').value.trim(),
-        email: email,
-        phone: document.getElementById('aPhone').value.trim(),
-        password: '',
-        date: new Date().toISOString(),
-        status: 'active'
+        email: email, phone: document.getElementById('aPhone').value.trim(),
+        date: new Date().toISOString(), status: 'active'
     };
-
-    var form = e.target;
-    var btn = form.querySelector('button[type="submit"]');
+    var form = e.target, btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
-
     addRegistration(reg, function(result) {
         btn.disabled = false;
-        if (result) {
-            updateAdminStats();
-            showToast('Зарегистрирован: ' + result.regId);
-            form.reset();
-        }
+        if (result) { updateAdminStats(); showToast('Зарегистрирован: ' + result.regId); form.reset(); }
     });
+});
+
+// ========== Export Excel ==========
+
+document.getElementById('exportExcel').addEventListener('click', function() {
+    var data = [['Номер', 'Фамилия', 'Имя', 'Отчество', 'Email', 'Телефон', 'Дата регистрации', 'Статус']];
+    for (var i = 0; i < registrations.length; i++) {
+        var r = registrations[i];
+        data.push([r.regId, r.lastName, r.firstName, r.middleName || '', r.email, r.phone, formatDate(r.date), r.status === 'active' ? 'Активна' : 'Отменена']);
+    }
+    var ws = XLSX.utils.aoa_to_sheet(data);
+    ws['!cols'] = [{wch:10},{wch:15},{wch:12},{wch:15},{wch:25},{wch:18},{wch:18},{wch:12}];
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Регистрации');
+    XLSX.writeFile(wb, 'registrations.xlsx');
+    showToast('Excel файл скачан');
 });
 
 // ========== Admin Table ==========
@@ -543,7 +545,6 @@ function renderAdminTable() {
     var tbody = document.getElementById('participantsBody'), emptyMsg = document.getElementById('emptyMessage');
     var query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
     var statusF = document.getElementById('statusFilter').value, filtered = [];
-
     for (var i = 0; i < registrations.length; i++) {
         var r = registrations[i];
         if (statusF !== 'all' && r.status !== statusF) continue;
@@ -553,14 +554,12 @@ function renderAdminTable() {
         }
         filtered.push(r);
     }
-
     if (filtered.length === 0) {
         tbody.innerHTML = ''; emptyMsg.classList.remove('hidden');
         document.querySelector('.table-wrapper').classList.add('hidden'); return;
     }
     emptyMsg.classList.add('hidden');
     document.querySelector('.table-wrapper').classList.remove('hidden');
-
     var html = '';
     for (var i = 0; i < filtered.length; i++) {
         var r = filtered[i], name = [r.lastName, r.firstName, r.middleName].filter(Boolean).join(' ');
@@ -580,7 +579,6 @@ function adminCancel(regId) {
         showToast('Запись ' + regId + ' отменена');
     });
 }
-
 function adminRestore(regId) {
     if (activeCount() >= MAX_CAPACITY) { showToast('Все места заняты', 'error'); return; }
     showModal('🔄', 'Восстановление', 'Восстановить регистрацию ' + regId + '?', 'Восстановить', function() {
@@ -588,7 +586,6 @@ function adminRestore(regId) {
         showToast('Запись ' + regId + ' восстановлена');
     });
 }
-
 function adminDelete(regId) {
     showModal('🗑️', 'Удаление', 'Удалить запись ' + regId + ' навсегда?', 'Удалить', function() {
         deleteRegistration(regId);
@@ -598,6 +595,27 @@ function adminDelete(regId) {
 
 document.getElementById('searchInput').addEventListener('input', renderAdminTable);
 document.getElementById('statusFilter').addEventListener('change', renderAdminTable);
+
+// ========== Auto-login from QR ==========
+
+var urlParams = new URLSearchParams(window.location.search);
+var qrReg = urlParams.get('reg');
+if (qrReg) {
+    var waitForData = setInterval(function() {
+        if (!dataReady) return;
+        clearInterval(waitForData);
+        for (var i = 0; i < registrations.length; i++) {
+            if (registrations[i].regId === qrReg) {
+                loginCards.classList.add('hidden');
+                loginBlock.classList.remove('hidden');
+                document.getElementById('loginEmail').value = registrations[i].email;
+                document.getElementById('loginEmail').focus();
+                showToast('Введите пароль для ' + qrReg);
+                break;
+            }
+        }
+    }, 200);
+}
 
 updateSpots();
     </script>
